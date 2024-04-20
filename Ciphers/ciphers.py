@@ -2,14 +2,12 @@ import string
 
 def main():
     x = int(input("This is a encryption assisting tool made as a Python Project\n" + "Do you wish to (1)encrypt or (2)decrypt? "))
+    message = input("Please write the message you wish to encrypt or decrypt: ")
+    n = int(input("Write the shift/offset: "))
     match x:
         case 1:
-            message = input("Please write the message you wish to encrypt: ")
-            n = int(input("Write the shift/offset: "))
             print(caesar(message, n))
         case 2:
-            message = input("Please write the message you wish to decrypt: ")
-            n = int(input("Write the shift/offset: "))
             print(caesarDecode(message, n))
 
 def caesar(message: str, n: int):
