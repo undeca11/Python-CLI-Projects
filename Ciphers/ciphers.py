@@ -1,32 +1,69 @@
 import string
 
 def main():
-    x = int(input("This is a encryption assisting tool made as a Python Project\n" + "Do you wish to (1)encrypt or (2)decrypt? "))
-    message = input("Please write your message: ")
-    cipher = int(input("What cipher do you wish to use? (1)Caesar Cipher (2)Caesar Box (3)Morse Code "))
+    x = int(input("Este é um projeto em Python para criptografar frases usando cifras\n" + "Você gostaria de (1)criptografar ou (2)descriptografar? "))
+    while x != 1 or x != 2:
+        x = int(input("Por favor digite 1 ou 2: "))
+    message = input("Digite a sua mensagem: ")
+    cipher = int(input("Qual cifra deseja usar? (1)Cifra de Caesar (2)Caixa de Caesar (3)Código Morse: "))
+    while cipher != 1 or cipher != 2 or cipher != 3:
+        cipher = int(input("Porfavor digite 1, 2 ou 3: "))
     match cipher:
         case 1:
-            n = int(input("Write the shift/offset= ")) % 26
+            n = int(input("Digite o offset: ")) % 26
             n = n if x == 1 else -n
             caesar(message, n)
+        case 2:
+            w = int(input("Digite a largura da caixa: "))
+            caesarBox(message, x, w)
         case 3:
             morse(message, x)
 
-def caesar(message= str, n= int):
+def caesar(message: str, n: int):
     alphabetLower = string.ascii_lowercase
     alphabetUpper = string.ascii_uppercase
     encryptedMessage = []
     for i in range(len(message)):
         if alphabetLower.count(message[i]) != 0:
             alphabetLetter = alphabetLower.index(message[i])
-            encryptedMessage.insert(i, alphabetLower[alphabetLetter+n])
+            encryptedMessage.insert(i, alphabetLower[(alphabetLetter+n)%26])
         elif alphabetUpper.count(message[i]) != 0:
             alphabetLetter = alphabetUpper.index(message[i])
-            encryptedMessage.insert(i, alphabetUpper[alphabetLetter+n])
+            encryptedMessage.insert(i, alphabetUpper[(alphabetLetter+n)%26])
         else: encryptedMessage.insert(i, message[i])
     return print("".join(encryptedMessage))
 
-def morse(message= str, x= int):
+def caesarBox (message: str, x: int, w: int):
+    message = message.replace(" ", "")
+    if len(message) % w != 0:
+        filler = input("Digite uma letra para preencher a caixa: ")
+        while filler == " ":
+            filler = input("Digite uma letra para preencher a caixa: ")
+        while len(message) % w != 0:
+            message = message + filler
+    print(message)
+    h = int(len(message) / w)
+    encryptedMessage = []
+    match x:
+        case 1:
+            caesarBox = [message[i:i+w] for i in range (0, len(message) , w)]
+            print(caesarBox)
+            for i in range(w):
+                    j = 0
+                    while j < h:
+                        encryptedMessage.append(caesarBox[j][i])
+                        j += 1
+        case 2:
+            caesarBox = [message[i:i+h] for i in range (0, len(message) , h)]
+            print(caesarBox)
+            for i in range(h):
+                    j = 0
+                    while j < w:
+                        encryptedMessage.append(caesarBox[j][i])
+                        j += 1
+    return print("".join(encryptedMessage))
+
+def morse(message: str, x: int):
     message = message.lower()
     morseNum = {
     "0" : "-----",
@@ -98,5 +135,7 @@ def morse(message= str, x= int):
                 else:
                     message.insert(i, encryptedMessage[i])
             return print("".join(message))
-
-main()
+try:
+    main()
+except ValueError:
+    print("Erro: Digite um número")
