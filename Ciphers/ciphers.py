@@ -10,7 +10,7 @@ def main():
         cipher = int(input("Porfavor digite 1, 2 ou 3: "))
     match cipher:
         case 1:
-            n = int(input("Digite o offset: ")) % 26
+            n = int(input("Digite a chave: ")) % 26
             n = n if x == 1 else -n
             caesar(message, n)
         case 2:
