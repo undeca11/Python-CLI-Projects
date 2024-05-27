@@ -54,20 +54,16 @@ def testeSenha():
     score = zx['score']
     tempo = zx['crack_times_display']['online_no_throttling_10_per_second']
     aviso = zx['feedback']['warning']
+    sugestao = zx['feedback']['suggestions']
     
     print(f'Aqui está a análise da sua senha:\nNota {score}/4\nDemoraria {traduzir(tempo,'tempo')} para adivinhar')
     if aviso != '': print(traduzir(aviso, 'aviso'))
+    if sugestao != '': print(traduzir(sugestao, 'sugestao'))
 
 def traduzir(frase, tipo):
     traducao = ''
-    x = 0
     match tipo:
         case 'tempo':
-            x = 1
-        case 'aviso':
-            x = 2
-    match x:
-        case 1:
             if frase == 'centuries':
                 return 'séculos'
             elif frase == 'less than a second':
@@ -92,7 +88,7 @@ def traduzir(frase, tipo):
                     case 'year':
                         traducao = 'ano'
                         if frase[-1] == 's': traducao += 's'
-        case 2:
+        case 'aviso':
             match frase:
                 case 'Straight rows of keys are easy to guess.':
                     traducao = 'Linhas de teclas consecutivas são fáceis de adivinhar'
@@ -122,6 +118,36 @@ def traduzir(frase, tipo):
                     traducao = 'Nomes e sobrenomes comuns são muito fáceis de se adivinhar'
                 case _:
                     traducao = frase
+        case 'sugestao':
+            for i in frase:
+                match i:
+                    case 'Use a few words, avoid common phrases.':
+                        frase[frase.index('Use a few words, avoid common phrases.')] = 'Use algumas palavras, evite frases comuns.'
+                    case 'No need for symbols, digits, or uppercase letters.':
+                        frase[frase.index('No need for symbols, digits, or uppercase letters.')] = 'Não precisa de símbolos,dígitos ou letras maiúsculas.'
+                    case 'Add another word or two. Uncommon words are better.':
+                        frase[frase.index('Add another word or two. Uncommon words are better.')] = 'Adicione uma palavra ou duas. Palavras incomuns são melhores.'
+                    case 'Use a longer keyboard pattern with more turns.':
+                        frase[frase.index('Use a longer keyboard pattern with more turns.')] = 'Use um padrão de teclas com mais "voltas".'
+                    case 'Avoid repeated words and characters.':
+                        frase[frase.index('Avoid repeated words and characters.')] = 'Evite palavras e caracteres repetidos.'
+                    case 'Avoid sequences.':
+                        frase[frase.index('Avoid sequences.')] = 'Evite sequências.'
+                    case 'Avoid recent years':
+                        frase[frase.index('Avoid recent years')] = 'Evite anos recentes.'
+                    case 'Avoid years that are associated with you.':
+                        frase[frase.index('Avoid years that are associated with you.')] = 'Evite anos que são associados com você.'
+                    case 'Avoid dates and years that are associated with you':
+                        frase[frase.index('Avoid dates and years that are associated with you')] = 'Evite anos e datas que são associados com você.'
+                    case "Capitalization doesn't help very much.":
+                        frase[frase.index("Capitalization doesn't help very much.")] = 'Capitalização não ajuda muito.'
+                    case 'All-uppercase is almost as easy to guess as all-lowercase':
+                        frase[frase.index('All-uppercase is almost as easy to guess as all-lowercase.')] = 'Usar somente letras maiúsculas são tão fáceis de adivinhar quanto letras minúsculas.'
+                    case "Reversed words aren't much harder to guess.":
+                        frase[frase.index("Reversed words aren't much harder to guess.")] = 'Palavras invertidas não são tão mais difíceis de adivinhar.'
+                    case "Predictable substitutions like '@' instead of 'a' don't help very much":
+                        frase[frase.index("Predictable substitutions like '@' instead of 'a' don't help very much.")] = 'Substituições comuns como "@" ao invés de "a" não ajudam muito'
+            traducao = ' '.join(frase)
     return traducao
 
 main()
