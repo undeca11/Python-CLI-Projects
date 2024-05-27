@@ -4,7 +4,7 @@ from pyperclip import copy
 from zxcvbn import zxcvbn
 
 def main():
-    print('Este é um projeto em Python para criar senha e testar su força.\nVocê gostaria de (1) Criar uma senha ou (2) Testar a força de uma senha?')
+    print('Este é um projeto em Python para criar senhas e testar sua força.\nVocê gostaria de (1) Criar uma senha ou (2) Testar a força de uma senha?')
     while True:
         x = input()
         if int(x) == 1:
@@ -27,7 +27,7 @@ def main():
             testeSenha()
             quit()
         else:
-            print('Por favor selecione 1 ou 2')
+            print('Por favor digite 1 ou 2')
 
 
 def criarSenha(x: int, l: int):
@@ -99,7 +99,7 @@ def traduzir(frase, tipo):
                 case 'Short keyboard patterns are easy to guess.':
                     traducao = 'Padrões curtos de teclas são fáceis de adivinhar'
                 case 'Repeats like "aaa" are easy to guess.':
-                    traducao = 'Repetições como \'aaa\' são fáceis de adivinhar'
+                    traducao = 'Repetições como "aaa" são fáceis de adivinhar'
                 case 'Repeats like "abcabcabc" are only slightly harder to guess than "abc".':
                     traducao = 'Repetições como "abcabcabc" são pouco mais difíceis de adivinhar do que "abc"'
                 case 'Sequences like "abc" or "6543" are easy to guess.':
@@ -115,7 +115,7 @@ def traduzir(frase, tipo):
                 case 'This is a very common password.':
                     traducao = 'Essa é uma senha muito comum'
                 case 'This is similar to a commonly used password.':
-                    traducao = 'Essa senha é muito parecida a uma senha muito comum'
+                    traducao = 'Essa senha é muito parecida com uma senha muito comum'
                 case 'Names and surnames by themselves are easy to guess.':
                     traducao = 'Usar apenas nomes e sobrenomes deixa a senha muito fácil de se adivinhar'
                 case 'Common names and surnames are easy to guess.':
