@@ -33,7 +33,6 @@ class fernetEncrypter:
         self.target = Path(self.filepath.replace(self.extension.decode(),'.fernet'))
         self.p.rename(self.target)
         self.filepath = self.target
-        print(self.target)
 
     def decrypt(self):
         self.p = Path(self.filepath)
