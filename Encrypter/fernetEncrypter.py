@@ -5,13 +5,13 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from base64 import urlsafe_b64encode
 
-class fernetEncrypter:
-    def __init__(self, password: bytes, filepath: Path, saltpath = path.join(path.dirname(__file__), 'salt.fernet')) -> None:
-        self.filepath = filepath
+class FernetEncrypter:
+    def __init__(self, password: bytes, filepath: Path, salt_path = path.join(path.dirname(__file__), 'salt.fernet')) -> None:
         self.password = password
-        self.saltpath = saltpath
-        self.p = Path(self.saltpath)
-        if path.exists(self.saltpath) != True:
+        self.filepath = filepath
+        self.salt_path = salt_path
+        self.p = Path(self.salt_path)
+        if path.exists(self.salt_path) != True:
             self.p.write_bytes(urandom(16))
         self.salt = self.p.read_bytes()
         self.kdf = PBKDF2HMAC(
@@ -42,9 +42,9 @@ class fernetEncrypter:
         except InvalidToken:
             print("InvalidToken Error")
         else:
-            self.oldExtension = self.data[self.data.rfind('.'):]
+            self._old_extension = self.data[self.data.rfind('.'):]
             self.data = self.data[:self.data.rfind('.')].encode()
             self.p.write_bytes(self.data)
-            self.target = Path(str(self.filepath).replace('.fernet',self.oldExtension))
+            self.target = Path(str(self.filepath).replace('.fernet',self._old_extension))
             self.p.rename(self.target)
             self.filepath = self.target
